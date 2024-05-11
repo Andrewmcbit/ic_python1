@@ -11,8 +11,8 @@ from datetime import datetime, date, time
    
 def interface(file_name):
     col = ['id','title','note','date']
-    if os.path.exists('notefile.csv'):
-        df = pd.read_csv('notefile.csv')
+    if os.path.exists(file_name):
+        df = pd.read_csv(file_name)
     else: df = pd.DataFrame(columns=col)
 
     var = 0
@@ -39,7 +39,7 @@ def interface(file_name):
             case '4':
                 df = edit_Note(df)
             case '5':
-                df = save_Notes(df)        
+                df = save_Notes(df, file_name)        
             case '6':
                 return print('end')
 
@@ -75,10 +75,10 @@ def edit_Note(df):
     df.loc[(df["id"] == int(inp))] = [int(inp), title, note, "{}.{}.{}  {}:{}".format(now.day, now.month, now.year, now.hour, now.minute)]
     return df
 
-def save_Notes(df):
-    if os.path.exists('notefile.csv'):
-        os.remove('notefile.csv')
-    df.to_csv('notefile.csv', index=False)
+def save_Notes(df, file_name):
+    if os.path.exists(file_name):
+        os.remove(file_name)
+    df.to_csv(file_name, index=False)
     print("Saved.")
     return df
 
